@@ -118,6 +118,10 @@ html[data-scrolled] .site-header { background: var(--header-bg); backdrop-filter
 .prose a:hover, .ulink:hover { color: var(--accent); text-decoration-color: var(--accent); }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .tag { font-family: var(--font-mono); font-size: var(--fs-label); color: var(--text-sub); border: 1px solid var(--border); border-radius: var(--radius-pill); height: 26px; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+/* 소개의 관심 분야 태그만 크게 (작업물 카드·상세의 태그는 그대로) */
+.about .tags { gap: 10px; }
+.about .tag { font-size: 0.9375rem; height: 36px; padding: 0 16px; }
+@media (max-width: 767px) { .about .tag { font-size: 0.875rem; height: 32px; padding: 0 13px; } }
 
 /* 마그네틱 버튼: 가까이 온 커서 쪽으로 살짝 끌려온다 (위치는 PointerFx 가 넣는다) */
 .btn.magnetic { transform: translate(var(--tx, 0px), var(--ty, 0px)); transition: background var(--dur-fast) var(--ease), transform var(--dur-base) var(--ease); }
