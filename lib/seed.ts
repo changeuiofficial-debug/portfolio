@@ -19,7 +19,7 @@ export const seedProfile: Profile = {
   certs: l10n('TOEIC | 920\nOPIc | IH\nAICE | Associate'),
   email: 'changeui.official@gmail.com',
   github: 'https://github.com/changeuiofficial-debug/changeuiofficial-debug',
-  photo: '',
+  photo: '/profile/hong.png',
 };
 
 const now = '2026-11-10T00:00:00.000Z';

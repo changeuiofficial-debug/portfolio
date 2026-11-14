@@ -184,10 +184,14 @@ html[data-scrolled] .site-header { background: var(--header-bg); backdrop-filter
 
 /* ── 소개 ── */
 .about { display: grid; gap: 48px; }
-.about.has-photo { grid-template-columns: 1fr; }
-@media (min-width: 1024px) { .about.has-photo { grid-template-columns: 280px 1fr; gap: 64px; } }
 .about-body { display: grid; gap: 48px; max-width: 760px; }
-.photo { width: 100%; max-width: 280px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-card); border: 1px solid var(--border); filter: grayscale(1); }
+/* 프로필 그림: 투명 배경에 밝은 선으로 그린 일러스트(public/profile/hong.png). 상자·테두리 없이 그림만 둔다.
+   PC에서는 소개 글 오른쪽에 두고 스크롤하는 동안 섹션 안에 머문다(sticky). 폰에서는 글 위에 작게 */
+.photo { order: -1; width: 140px; height: auto; }
+@media (min-width: 1024px) {
+  .about.has-photo { grid-template-columns: minmax(0, 1fr) 260px; gap: 64px; align-items: start; }
+  .photo { order: 0; width: 260px; position: sticky; top: calc(var(--header-h) + 24px); }
+}
 .blk h3 { font-size: var(--fs-small); font-weight: 400; color: var(--text-sub); margin-bottom: 12px; }
 .stack { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(132px, 16vw, 168px), 1fr)); gap: 10px; }
 .stack li { display: flex; align-items: center; gap: clamp(8px, 1vw, 12px); min-height: 48px; padding: 10px clamp(12px, 1.4vw, 16px); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-card); font-size: clamp(14px, 1.3vw, 16px); transition: border-color var(--dur-base) var(--ease), transform var(--dur-base) var(--ease), background var(--dur-base) var(--ease); }
