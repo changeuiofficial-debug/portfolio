@@ -5,7 +5,7 @@ import Highlight from '@/components/Highlight';
 import ProfileEditor from '@/components/ProfileEditor';
 import ProjectCard from '@/components/ProjectCard';
 import Reveal from '@/components/Reveal';
-import ScrollMark from '@/components/ScrollMark';
+import Scramble from '@/components/Scramble';
 import { isOwner } from '@/lib/auth';
 import { dict, href, isLang, lines, pick, type Dict } from '@/lib/i18n';
 import { stackIcon } from '@/lib/stack';
@@ -132,12 +132,12 @@ function About({ profile, lang, t }: { profile: Profile; lang: Lang; t: Dict }) 
           <div className="blk">
             <h3>{t.certs}</h3>
             <ul className="certs">
-              {certs.map((v) => {
+              {certs.map((v, i) => {
                 const [name, ...rest] = v.split('|');
                 return (
                   <li key={v}>
                     <span className="mono">{name.trim()}</span>
-                    {rest.length > 0 && <ScrollMark>{rest.join('|').trim()}</ScrollMark>}
+                    {rest.length > 0 && <Scramble text={rest.join('|').trim()} index={i} />}
                   </li>
                 );
               })}

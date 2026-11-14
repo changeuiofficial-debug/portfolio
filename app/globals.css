@@ -208,18 +208,8 @@ html[data-scrolled] .site-header { background: var(--header-bg); backdrop-filter
 @media (max-width: 767px) { .edu { grid-template-columns: 1fr; row-gap: 2px; } .edu > :nth-child(even) { margin-bottom: 14px; } }
 .certs { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(132px, 16vw, 168px), 1fr)); gap: 10px; }
 .certs li { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius-card); }
-/* 점수·등급은 한 줄 소개와 같은 형광펜(라임 한 가지). 칠해진 정도(--p)는 스크롤이 정한다 (ScrollMark) */
-.certs b { align-self: flex-start; font-size: var(--fs-h2); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
-/* 위 레이어: 칠해진 만큼만 어두운 글자색, 나머지는 원래 글자색 (글자 모양으로 자른 그라데이션). 아래 레이어: 라임 칠 */
-.scroll-mark {
-  color: transparent;
-  background:
-    linear-gradient(90deg, var(--on-accent) calc(var(--p, 0) * 100%), var(--text) calc(var(--p, 0) * 100%)) text,
-    linear-gradient(var(--accent), var(--accent)) no-repeat left / calc(var(--p, 0) * 100%) 100% border-box;
-  -webkit-background-clip: text, border-box;
-  background-clip: text, border-box;
-  padding: 0 0.2em; border-radius: 4px;
-}
+/* 점수·등급은 화면에 들어올 때 무작위 글자가 풀리며 확정된다 (Scramble). 색은 흰색 그대로 */
+.certs b { white-space: nowrap; font-size: var(--fs-h2); font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
 .contact { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
 
 /* ── 작업물 카드 ── */
