@@ -6,6 +6,7 @@ import ProfileEditor from '@/components/ProfileEditor';
 import ProjectCard from '@/components/ProjectCard';
 import Reveal from '@/components/Reveal';
 import Scramble from '@/components/Scramble';
+import Portrait from '@/components/Portrait';
 import { isOwner } from '@/lib/auth';
 import { dict, href, isLang, lines, pick, type Dict } from '@/lib/i18n';
 import { stackIcon } from '@/lib/stack';
@@ -165,7 +166,7 @@ function About({ profile, lang, t }: { profile: Profile; lang: Lang; t: Dict }) 
         )}
       </div>
       {/* 사진은 글 뒤에 둔다: PC에서는 오른쪽, 폰에서는 CSS(order)로 글 위로 올라간다 */}
-      {profile.photo && <img className="photo" src={profile.photo} alt={profile.name} />}
+      {profile.photo && <Portrait src={profile.photo} alt={profile.name} />}
     </div>
   );
 }
