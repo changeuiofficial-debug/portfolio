@@ -1,0 +1,30 @@
+{
+  "name": "홍창의",
+  "label": {
+    "ko": "AI Engineer",
+    "en": "AI Engineer"
+  },
+  "tagline": {
+    "ko": "기업의 AX 전환을 구현하는 AI 엔지니어 홍창의입니다.",
+    "en": ""
+  },
+  "highlight": {
+    "ko": "AI 엔지니어 | 홍창의",
+    "en": ""
+  },
+  "interests": {
+    "ko": "AX 전환 AI 엔지니어링\n로컬 LLM\n프롬프트·컨텍스트 엔지니어링",
+    "en": ""
+  },
+  "skills": {
+    "ko": "웹앱 기획·개발·배포·유지보수 (포시즌FC 풋살팀 웹앱)\n브라우저 안에서 로컬 LLM으로 문서 Q&A를 하는 웹앱 구현 (LocalSage)\nAI 에이전트 제품 QA 수행 (●●●●● AI팀, 2025년 1~4월)\n영어 업무 소통 (TOEIC 920)",
+    "en": ""
+  },
+  "education": {
+    "ko": "2026.10 — 2027.05 수료 예정 | ●●●●● · AI 엔지니어 과정\n2026.11 수료 | 고양시민 기후테크 아카데미\n2026.03 졸업 | ●●●●● · 소프트웨어공학",
+    "en": ""
+  },
+  "email": "changeui.official@gmail.com",
+  "github": "https://github.com/changeuiofficial-debug/changeuiofficial-debug",
+  "photo": ""
+}

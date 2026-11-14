@@ -1,0 +1,171 @@
+[
+  {
+    "id": "seed-fourseason",
+    "slug": "fourseason-fc",
+    "status": "published",
+    "featured": true,
+    "order": 0,
+    "title": {
+      "ko": "포시즌FC 웹앱",
+      "en": ""
+    },
+    "summary": {
+      "ko": "로그인 없이 쓰는 풋살팀 운영 웹앱.",
+      "en": ""
+    },
+    "cover": "/seed/fourseason-v2.png",
+    "coverAlt": {
+      "ko": "포시즌FC 웹앱의 일정 달력 화면과 다음 경기 투표 화면",
+      "en": ""
+    },
+    "tags": [
+      "웹앱",
+      "공동 개발"
+    ],
+    "start": "",
+    "end": "",
+    "ongoing": true,
+    "background": {
+      "ko": "풋살팀 운영을 한곳에서 처리하기 위해 만들었습니다. 팀원 누구나 바로 쓸 수 있도록 로그인 없이 쓰는 구조로 설계해 접근 장벽을 낮췄습니다.",
+      "en": ""
+    },
+    "role": {
+      "ko": "운영진 1명과 공동 개발했습니다. 기획부터 개발, 배포, 이후 유지보수까지 맡고 있습니다.",
+      "en": ""
+    },
+    "features": {
+      "ko": "로그인 없이 바로 쓰는 팀 운영 화면\n운영진용 익명 건의함",
+      "en": ""
+    },
+    "problem": {
+      "ko": "iOS에서 앱이 백그라운드에서 돌아올 때 생기는 연결 오류를 진단하고 수정했습니다.\n\n24커밋이 쌓인 협업자 브랜치를 병합하면서 6개 파일의 충돌을 해결했습니다.",
+      "en": ""
+    },
+    "result": {
+      "ko": "활성 사용자. 지금도 운영하며 유지보수하고 있습니다.",
+      "en": ""
+    },
+    "resultFigure": {
+      "ko": "약 40명",
+      "en": ""
+    },
+    "liveUrl": "https://fourseasonfc.vercel.app/",
+    "repoUrl": "",
+    "shots": [],
+    "createdAt": "2026-11-10T00:00:00.000Z",
+    "updatedAt": "2026-11-10T00:00:00.000Z"
+  },
+  {
+    "id": "seed-localsage",
+    "slug": "localsage",
+    "status": "published",
+    "featured": true,
+    "order": 1,
+    "title": {
+      "ko": "LocalSage",
+      "en": ""
+    },
+    "summary": {
+      "ko": "올린 문서에 대해 브라우저 안의 로컬 LLM에게 질문하는 웹앱.",
+      "en": ""
+    },
+    "cover": "/seed/localsage.svg",
+    "coverAlt": {
+      "ko": "LocalSage 화면 (임시 이미지)",
+      "en": ""
+    },
+    "tags": [
+      "로컬 LLM",
+      "문서 Q&A"
+    ],
+    "start": "",
+    "end": "",
+    "ongoing": false,
+    "background": {
+      "ko": "데이터가 브라우저 밖으로 나가지 않는 문서 Q&A를 만들고자 했습니다.",
+      "en": ""
+    },
+    "role": {
+      "ko": "",
+      "en": ""
+    },
+    "features": {
+      "ko": ".txt / .md 문서 올리기 (100KB 이하)\n브라우저 안에서 실행되는 로컬 LLM에게 질문\n문서 전체를 AI에게 넘기는 방식",
+      "en": ""
+    },
+    "problem": {
+      "ko": "",
+      "en": ""
+    },
+    "result": {
+      "ko": "",
+      "en": ""
+    },
+    "resultFigure": {
+      "ko": "",
+      "en": ""
+    },
+    "liveUrl": "",
+    "repoUrl": "",
+    "shots": [],
+    "createdAt": "2026-11-10T00:00:00.000Z",
+    "updatedAt": "2026-11-10T00:00:00.000Z"
+  },
+  {
+    "id": "seed-kma-forecast",
+    "slug": "kma-forecast",
+    "status": "published",
+    "featured": true,
+    "order": 2,
+    "title": {
+      "ko": "기상청 예보 웹앱",
+      "en": ""
+    },
+    "summary": {
+      "ko": "기상청 단기·중기예보를 지역별로 확인하는 웹앱.",
+      "en": ""
+    },
+    "cover": "/seed/kma-forecast.png",
+    "coverAlt": {
+      "ko": "기상청 예보 웹앱의 단기예보 화면. 왼쪽 메뉴, 지역 선택, 최고·최저기온과 강수확률 요약 카드가 보입니다.",
+      "en": ""
+    },
+    "tags": [
+      "웹앱",
+      "Python",
+      "공공데이터 API"
+    ],
+    "start": "2026-11",
+    "end": "",
+    "ongoing": true,
+    "background": {
+      "ko": "기후테크 아카데미 실습으로 시작한 기상청 예보 조회 웹앱입니다. 단기예보(현재 날씨·6시간·단기예보)와 중기예보(전망·육상·기온·해상)를 한 사이트에서 볼 수 있도록 만들었습니다. 체험용 화면은 실시간이 아닌 스냅샷이며, 대표 지역만 수록했습니다.",
+      "en": ""
+    },
+    "role": {
+      "ko": "",
+      "en": ""
+    },
+    "features": {
+      "ko": "단기(현재 날씨·6시간·단기예보)와 중기(전망·육상·기온·해상) 7개 화면\n전국 3,838개 지역 검색과 기상청 격자 좌표 기반 조회\n기온·강수확률을 그래프와 표, 요약 카드로 확인\n기상청 인증키는 서버에서만 사용하고 브라우저에 노출하지 않음\n서버 캐시와 호출 간격·일일 호출량 제한으로 API 사용량 관리",
+      "en": ""
+    },
+    "problem": {
+      "ko": "",
+      "en": ""
+    },
+    "result": {
+      "ko": "",
+      "en": ""
+    },
+    "resultFigure": {
+      "ko": "",
+      "en": ""
+    },
+    "liveUrl": "https://claude.ai/artifact/KpEE7LPH1e1kCYgMMQugo6",
+    "repoUrl": "https://github.com/changeuiofficial-debug/kma-mid-forecast",
+    "shots": [],
+    "createdAt": "2026-11-14T02:44:13.000Z",
+    "updatedAt": "2026-11-14T03:24:56.000Z"
+  }
+]

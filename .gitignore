@@ -1,0 +1,15 @@
+node_modules
+.next
+.next-verify
+.env.local
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# 로컬 저장소 중 업로드한 이미지만 제외한다.
+# 자기소개(profile.json)·작업물(projects.json)은 읽기 전용 공개 배포에 필요하므로 저장소에 포함한다.
+data/uploads
+data/*.tmp
+
+# 개인 개발 도구 설정
+.claude
+.DS_Store

@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>커서 트레일 시안 6종</title>
+<style>
+  :root {
+    --bg: #0e0e0f; --surface: #19191b; --border: #2a2a2c; --border-strong: #3a3a3d;
+    --text: #f2f2f2; --text-sub: #8a8a8a; --text-faint: #5e5e61;
+    --accent: #c6f432; --on-accent: #1a2400;
+    --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-sans); padding: 48px 16px 80px; line-height: 1.6; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  h1 { font-size: clamp(2rem, 4.5vw, 3rem); letter-spacing: -0.02em; line-height: 1.2; }
+  .lead { color: var(--text-sub); margin-top: 12px; max-width: 680px; }
+  .note { margin-top: 24px; border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; background: var(--surface); font-size: 0.875rem; color: var(--text-sub); }
+  .note b { color: var(--text); font-weight: 600; }
+  .note li { margin-left: 18px; margin-top: 4px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  .card { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); overflow: hidden; }
+  .stage { position: relative; height: 240px; background: var(--bg); border-bottom: 1px solid var(--border); cursor: none; touch-action: none; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hint { position: absolute; inset: 0; display: grid; place-items: center; color: var(--text-faint); font-size: 0.8125rem; pointer-events: none; transition: opacity .3s; }
+  .stage.on .hint { opacity: 0; }
+  .info { padding: 16px 20px 20px; }
+  .num { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--accent); }
+  .info h2 { font-size: 1.25rem; margin-top: 2px; letter-spacing: -0.01em; }
+  .info p { color: var(--text-sub); font-size: 0.875rem; margin-top: 6px; }
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+  .tag { font-size: 0.75rem; border: 1px solid var(--border-strong); border-radius: 999px; padding: 2px 10px; color: var(--text-sub); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>커서 트레일 시안 6종</h1>
+  <p class="lead">각 칸 위에서 마우스를 움직여 보세요. 실제 사이트에서는 글과 카드가 없는 빈 배경에서만 보이게 할 예정입니다. 색은 라임 한 가지, 글로우와 그라데이션은 쓰지 않았습니다.</p>
+
+  <div class="note">
+    <b>적용 전 확인</b>
+    <ul>
+      <li>design.md 506행은 "화면 전체에서 마우스를 따라다니는 효과"를 넣지 않기로 정해 두었습니다. 이번 요청은 빈 배경에 한정하므로 그 항목을 예외로 고치면 됩니다.</li>
+      <li>터치 기기와 "동작 줄이기" 설정에서는 끕니다.</li>
+      <li>글·카드·버튼 위에서는 사라져 읽기를 방해하지 않습니다.</li>
+    </ul>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+const LIME = '198,244,50';
+const MONO = '14px "JetBrains Mono", ui-monospace, monospace';
+
+const OPTIONS = [
+  { id: 'dots', name: '점 꼬리', desc: '지나간 자리에 라임 점이 남고 작아지며 사라집니다. 가장 단순하고 무난합니다.', tags: ['잔잔함', '무난함'] },
+  { id: 'line', name: '가는 선', desc: '커서 뒤로 끝이 가늘어지는 선이 이어집니다. 붓으로 긋는 느낌입니다.', tags: ['우아함', '에디토리얼'] },
+  { id: 'ripple', name: '물결 링', desc: '움직일 때마다 얇은 링이 퍼지며 사라집니다. 수면에 닿는 느낌입니다.', tags: ['부드러움', '여백과 어울림'] },
+  { id: 'grid', name: '점 격자 반응', desc: '배경에 깔린 점 격자가 커서 근처에서 라임으로 켜졌다가 서서히 꺼집니다.', tags: ['세련됨', '배경 질감'] },
+  { id: 'code', name: '코드 문자', desc: '0 1 { } < / > 같은 기호가 떨어지며 사라집니다. 개발자 포트폴리오다운 시안입니다.', tags: ['개성', '개발자 느낌'] },
+  { id: 'follow', name: '꼬리 링', desc: '시간차를 두고 따라오는 링 3겹. 커서가 멈추면 한 점으로 모입니다. 가장 절제된 안입니다.', tags: ['절제', '고급스러움'] },
+];
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const grid = document.getElementById('grid');
+const panels = [];
+
+OPTIONS.forEach((o, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="stage"><canvas></canvas><div class="hint">마우스를 올려보세요</div></div>
+    <div class="info">
+      <div class="num">안 ${i + 1}</div>
+      <h2>${o.name}</h2>
+      <p>${o.desc}</p>
+      <div class="tags">${o.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    </div>`;
+  grid.appendChild(card);
+  panels.push(makePanel(o.id, card.querySelector('.stage'), card.querySelector('canvas')));
+});
+
+function makePanel(type, stage, canvas) {
+  const ctx = canvas.getContext('2d');
+  const p = { type, w: 0, h: 0, pts: [], last: null, acc: 0, mx: -999, my: -999, active: false, heat: null, cols: 0, rows: 0, rings: [3, 2, 1].map(() => ({ x: 0, y: 0 })) , lastEmit: 0 };
+  const SP = 22;
+
+  function resize() {
+    const dpr = devicePixelRatio || 1;
+    p.w = stage.clientWidth; p.h = stage.clientHeight;
+    canvas.width = p.w * dpr; canvas.height = p.h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    p.cols = Math.ceil(p.w / SP) + 1; p.rows = Math.ceil(p.h / SP) + 1;
+    p.heat = new Float32Array(p.cols * p.rows);
+  }
+  new ResizeObserver(resize).observe(stage);
+  resize();
+
+  function move(e) {
+    const r = stage.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top, now = performance.now();
+    if (!p.active) { p.rings.forEach(g => { g.x = x; g.y = y; }); }
+    p.active = true; stage.classList.add('on');
+    const px = p.last ? p.last.x : x, py = p.last ? p.last.y : y;
+    const d = Math.hypot(x - px, y - py);
+    p.mx = x; p.my = y;
+
+    if (type === 'dots' || type === 'line') {
+      const n = Math.max(1, Math.floor(d / 8));
+      for (let k = 1; k <= n; k++) p.pts.push({ x: px + (x - px) * k / n, y: py + (y - py) * k / n, t: now });
+    } else if (type === 'ripple') {
+      p.acc += d;
+      if (p.acc > 70 && now - p.lastEmit > 60) { p.acc = 0; p.lastEmit = now; p.pts.push({ x, y, t: now }); }
+    } else if (type === 'code') {
+      p.acc += d;
+      if (p.acc > 26) {
+        p.acc = 0;
+        const ch = '01{}<>/;=()'[Math.floor(Math.random() * 11)];
+        p.pts.push({ x, y, t: now, ch, dx: (Math.random() - .5) * 10 });
+      }
+    } else if (type === 'grid') {
+      const R = 70;
+      const c0 = Math.max(0, Math.floor((x - R) / SP)), c1 = Math.min(p.cols - 1, Math.ceil((x + R) / SP));
+      const r0 = Math.max(0, Math.floor((y - R) / SP)), r1 = Math.min(p.rows - 1, Math.ceil((y + R) / SP));
+      for (let r = r0; r <= r1; r++) for (let c = c0; c <= c1; c++) {
+        const dd = Math.hypot(c * SP - x, r * SP - y);
+        if (dd < R) { const v = 1 - dd / R; const i = r * p.cols + c; if (v > p.heat[i]) p.heat[i] = v; }
+      }
+    }
+    p.last = { x, y };
+  }
+  stage.addEventListener('pointermove', move);
+  stage.addEventListener('pointerleave', () => { p.last = null; p.active = false; stage.classList.remove('on'); });
+  return { p, ctx, draw: () => draw(p, ctx) };
+}
+
+function draw(p, ctx) {
+  const now = performance.now();
+  ctx.clearRect(0, 0, p.w, p.h);
+
+  if (p.type === 'dots') {
+    p.pts = p.pts.filter(q => now - q.t < 700);
+    for (const q of p.pts) {
+      const a = (now - q.t) / 700;
+      ctx.fillStyle = `rgba(${LIME},${1 - a})`;
+      ctx.beginPath(); ctx.arc(q.x, q.y, 4 * (1 - a) + .4, 0, 7); ctx.fill();
+    }
+  }
+
+  if (p.type === 'line') {
+    p.pts = p.pts.filter(q => now - q.t < 600);
+    ctx.lineCap = 'round';
+    for (let i = 1; i < p.pts.length; i++) {
+      const a = p.pts[i - 1], b = p.pts[i], age = (now - b.t) / 600;
+      if (Math.hypot(b.x - a.x, b.y - a.y) > 60) continue;
+      ctx.strokeStyle = `rgba(${LIME},${1 - age})`;
+      ctx.lineWidth = 3.2 * (1 - age) + .3;
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+    }
+  }
+
+  if (p.type === 'ripple') {
+    p.pts = p.pts.filter(q => now - q.t < 900);
+    ctx.lineWidth = 1;
+    for (const q of p.pts) {
+      const a = (now - q.t) / 900, e = 1 - Math.pow(1 - a, 3);
+      ctx.strokeStyle = `rgba(${LIME},${.9 * (1 - a)})`;
+      ctx.beginPath(); ctx.arc(q.x, q.y, 4 + 34 * e, 0, 7); ctx.stroke();
+    }
+  }
+
+  if (p.type === 'grid') {
+    for (let r = 0; r < p.rows; r++) for (let c = 0; c < p.cols; c++) {
+      const i = r * p.cols + c, h = p.heat[i];
+      if (h > 0.01) p.heat[i] = h * 0.95; else p.heat[i] = 0;
+      if (h > 0.01) { ctx.fillStyle = `rgba(${LIME},${.25 + .75 * h})`; ctx.beginPath(); ctx.arc(c * SPX, r * SPX, 1.5 + 2 * h, 0, 7); ctx.fill(); }
+      else { ctx.fillStyle = '#2a2a2c'; ctx.beginPath(); ctx.arc(c * SPX, r * SPX, 1.5, 0, 7); ctx.fill(); }
+    }
+  }
+
+  if (p.type === 'code') {
+    p.pts = p.pts.filter(q => now - q.t < 1000);
+    ctx.font = MONO; ctx.textAlign = 'center';
+    for (const q of p.pts) {
+      const a = (now - q.t) / 1000;
+      ctx.fillStyle = `rgba(${LIME},${1 - a})`;
+      ctx.fillText(q.ch, q.x + q.dx * a, q.y + 6 + 22 * a);
+    }
+  }
+
+  if (p.type === 'follow' && p.active) {
+    const ease = [.38, .22, .12];
+    p.rings.forEach((g, i) => { g.x += (p.mx - g.x) * ease[i]; g.y += (p.my - g.y) * ease[i]; });
+    const sizes = [8, 15, 24], alphas = [1, .55, .28];
+    p.rings.forEach((g, i) => {
+      ctx.strokeStyle = `rgba(${LIME},${alphas[i]})`; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(g.x, g.y, sizes[i], 0, 7); ctx.stroke();
+    });
+    ctx.fillStyle = `rgb(${LIME})`; ctx.beginPath(); ctx.arc(p.mx, p.my, 2.5, 0, 7); ctx.fill();
+  }
+
+  // 안 1~5는 기본 커서가 보이지 않으므로 작은 점으로 위치만 표시
+  if (p.active && p.type !== 'follow') {
+    ctx.fillStyle = '#f2f2f2'; ctx.beginPath(); ctx.arc(p.mx, p.my, 2.5, 0, 7); ctx.fill();
+  }
+}
+const SPX = 22;
+
+function loop() {
+  for (const pn of panels) pn.draw();
+  if (!reduce) requestAnimationFrame(loop);
+}
+if (reduce) { document.querySelector('.lead').textContent += ' (동작 줄이기 설정이 켜져 있어 효과가 꺼져 있습니다.)'; }
+else loop();
+</script>
+</body>
+</html>
