@@ -196,10 +196,11 @@ html[data-scrolled] .site-header { background: var(--header-bg); backdrop-filter
 .photo { order: -1; width: 140px; height: auto; }
 /* 얼굴 일러스트: 입 선만 따로 겹쳐 두고, 호버 시 위아래로 뒤집어 미소 짓는다 (︵ → 평평 → ‿).
    기준점은 입 선의 한가운데 (그림 폭의 61.48%, 높이의 50.61%) */
-.portrait { position: relative; display: block; }
+/* 미소 지을 때 고개도 살짝 기울인다. 기준점은 목(그림 아래쪽 가운데) */
+.portrait { position: relative; display: block; transform-origin: 50% 90%; transition: transform 450ms var(--ease); }
 .portrait img { display: block; width: 100%; height: auto; }
 .portrait .mouth { position: absolute; inset: 0; transform-origin: 61.48% 50.61%; transition: transform 450ms var(--ease); }
-@media (hover: hover) { .portrait:hover .mouth { transform: scaleY(-1); } }
+@media (hover: hover) { .portrait:hover .mouth { transform: scaleY(-1); } .portrait:hover { transform: rotate(-6deg); } }
 @media (min-width: 1024px) {
   .about.has-photo { grid-template-columns: minmax(0, 1fr) 260px; gap: 64px; align-items: start; }
   .photo { order: 0; width: 260px; position: sticky; top: calc(var(--header-h) + 24px); }
