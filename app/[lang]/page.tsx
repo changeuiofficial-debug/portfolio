@@ -7,6 +7,7 @@ import Reveal from '@/components/Reveal';
 import Scramble from '@/components/Scramble';
 import Portrait from '@/components/Portrait';
 import ScrollLit from '@/components/ScrollLit';
+import HeroBackdrop from '@/components/HeroBackdrop';
 import { isOwner } from '@/lib/auth';
 import { dict, isLang, lines, pick, type Dict } from '@/lib/i18n';
 import { stackIcon } from '@/lib/stack';
@@ -195,6 +196,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   return (
     <>
       <div className="hero">
+        <HeroBackdrop />
         <div className="mono">{pick(profile.label, lang)}</div>
         <Tagline text={pick(profile.tagline, lang)} highlight={profile.tagline[lang]?.trim() ? profile.highlight[lang] : profile.highlight.ko} />
         <div className="cta">

@@ -7,8 +7,9 @@ const RADIUS = 70; // 커서 주변 몇 px 안의 점이 켜지는지
 const DECAY = 0.95; // 프레임마다 남는 밝기 (작을수록 빨리 꺼짐)
 const LIME = '198,244,50';
 // 글·카드·버튼·입력창 위에서는 켜지 않는다. 아무것도 없는 빈 배경에서만 보인다.
+// 첫 화면(.hero)은 배경에 토큰 흐름이 있으므로 켜지 않는다.
 const CONTENT =
-  'a, button, input, textarea, select, label, img, video, svg, canvas, p, h1, h2, h3, h4, h5, h6, li, span, b, time, code, pre, form, table, figure, header, .card, .editbar';
+  'a, button, input, textarea, select, label, img, video, svg, canvas, p, h1, h2, h3, h4, h5, h6, li, span, b, time, code, pre, form, table, figure, header, .card, .editbar, .hero';
 
 /**
  * 커서 트레일: 빈 배경에서 커서 근처의 점만 라임색으로 켜졌다가 서서히 꺼진다.
