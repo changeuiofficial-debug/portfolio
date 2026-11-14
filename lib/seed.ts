@@ -16,7 +16,7 @@ export const seedProfile: Profile = {
       '2026.03 졸업 | ●●●●● · 소프트웨어공학',
     ].join('\n'),
   ),
-  certs: l10n('TOEIC | 920\nOPIc | IH'),
+  certs: l10n('TOEIC | 920\nOPIc | IH\nAICE | Associate'),
   email: 'changeui.official@gmail.com',
   github: 'https://github.com/changeuiofficial-debug/changeuiofficial-debug',
   photo: '',
