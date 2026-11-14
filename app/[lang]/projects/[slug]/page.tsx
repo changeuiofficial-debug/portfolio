@@ -54,7 +54,7 @@ export default async function ProjectDetail({ params }: Props) {
   return (
     <>
       <div className="page-head">
-        <Link className="back" href={href(lang, '/projects')}>
+        <Link className="back" href={`${href(lang, '/')}#projects`}>
           ← {t.back}
         </Link>
         <h1>{pick(p.title, lang)}</h1>

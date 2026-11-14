@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CopyEmail } from '@/components/Bits';
 import Highlight from '@/components/Highlight';
@@ -8,7 +7,7 @@ import Reveal from '@/components/Reveal';
 import Scramble from '@/components/Scramble';
 import Portrait from '@/components/Portrait';
 import { isOwner } from '@/lib/auth';
-import { dict, href, isLang, lines, pick, type Dict } from '@/lib/i18n';
+import { dict, isLang, lines, pick, type Dict } from '@/lib/i18n';
 import { stackIcon } from '@/lib/stack';
 import { getProfile, listProjects } from '@/lib/store';
 import type { Lang, Profile } from '@/lib/types';
@@ -183,10 +182,11 @@ function About({ profile, lang, t }: { profile: Profile; lang: Lang; t: Dict }) 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!isLang(lang)) notFound();
-  const [profile, projects, owner] = await Promise.all([getProfile(), listProjects(), isOwner()]);
+  const [profile, owner] = await Promise.all([getProfile(), isOwner()]);
+  // 작업물은 메인에서 전부 보여 준다 (따로 목록 페이지를 두지 않는다).
+  // 소유자에게는 임시저장한 작업물도 보인다. 방문자에게는 공개한 것만.
+  const shown = await listProjects({ includeDrafts: owner });
   const t = dict(lang);
-  const featured = projects.filter((p) => p.featured).slice(0, 3);
-  const shown = featured.length ? featured : projects.slice(0, 3);
   const about = <About profile={profile} lang={lang} t={t} />;
 
   return (
@@ -195,9 +195,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="mono">{pick(profile.label, lang)}</div>
         <Tagline text={pick(profile.tagline, lang)} highlight={profile.tagline[lang]?.trim() ? profile.highlight[lang] : profile.highlight.ko} />
         <div className="cta">
-          <Link className="btn primary magnetic" href={href(lang, '/projects')}>
+          <a className="btn primary magnetic" href="#projects">
             {t.viewProjects}
-          </Link>
+          </a>
           {profile.email && (
             <a className="tlink" href={`mailto:${profile.email}`}>
               {t.emailSend} <span className="arr">→</span>
@@ -220,7 +220,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </Reveal>
       </section>
 
-      <section className="section" aria-labelledby="projects-h">
+      <section className="section" id="projects" aria-labelledby="projects-h">
         <Reveal>
           <div className="sec-head">
             <div>
@@ -229,11 +229,6 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               </div>
               <h2 id="projects-h">{t.projects}</h2>
             </div>
-            {projects.length > 0 && (
-              <Link className="tlink" href={href(lang, '/projects')}>
-                {t.viewAll} <span className="arr">→</span>
-              </Link>
-            )}
           </div>
         </Reveal>
         {shown.length ? (

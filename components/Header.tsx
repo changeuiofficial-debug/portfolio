@@ -47,7 +47,7 @@ export default function Header({ lang, name, email, t }: { lang: Lang; name: str
           <Link href={`${href(lang, '/')}#about`} aria-current={!onProjects ? 'page' : undefined}>
             {t.about}
           </Link>
-          <Link href={href(lang, '/projects')} aria-current={onProjects ? 'page' : undefined}>
+          <Link href={`${href(lang, '/')}#projects`} aria-current={onProjects ? 'page' : undefined}>
             {t.projects}
           </Link>
           <a
