@@ -34,30 +34,39 @@ function Tagline({ text, highlight }: { text: string; highlight: string }) {
   const marks = parts.filter((part) => part.hl).length;
   let mark = 0;
   let i = 0;
-  return (
-    <h1>
-      {parts.flatMap((part, pi) =>
-        part.hl
-          ? [
-              <Highlight
-                key={`h${pi}`}
-                text={part.text}
-                index={i++}
-                role={marks < 2 ? 'solo' : mark++ === 0 ? 'mark' : 'line'}
-              />,
-            ]
-          : part.text.split(/(\s+)/).map((word, wi) =>
-              word.trim() ? (
-                <span className="w" key={`${pi}-${wi}`} style={{ '--i': i++ } as React.CSSProperties}>
-                  {word}
-                </span>
-              ) : (
-                word && ' '
-              ),
-            ),
-      )}
-    </h1>
+  const word = (text: string, key: string) => (
+    <span className="w" key={key} style={{ '--i': i++ } as React.CSSProperties}>
+      {text}
+    </span>
   );
+  const out: React.ReactNode[] = [];
+  parts.forEach((part, pi) => {
+    if (part.hl) {
+      out.push(
+        <Highlight
+          key={`h${pi}`}
+          text={part.text}
+          index={i++}
+          role={marks < 2 ? 'solo' : mark++ === 0 ? 'mark' : 'line'}
+        />,
+      );
+      return;
+    }
+    const words = part.text.split(/(\s+)/);
+    // 강조 문구 바로 뒤에 붙은 말("홍창의" + "입니다.")은 줄이 바뀔 때 떨어지지 않게 한 덩어리로 묶는다
+    if (pi > 0 && parts[pi - 1].hl && words[0]) {
+      const prev = out.pop();
+      out.push(
+        <span className="keep" key={`k${pi}`}>
+          {prev}
+          {word(words[0], `${pi}-0`)}
+        </span>,
+      );
+      words[0] = '';
+    }
+    words.forEach((w, wi) => out.push(w.trim() ? word(w, `${pi}-${wi}`) : w && ' '));
+  });
+  return <h1>{out}</h1>;
 }
 
 /** "기간 | 내용" 형식의 줄을 왼쪽 기간, 오른쪽 내용으로 보여준다 (경력, 학력·교육) */

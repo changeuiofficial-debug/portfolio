@@ -4,7 +4,7 @@ import { emptyProject, l10n, type Profile, type Project } from './types';
 export const seedProfile: Profile = {
   name: '홍창의',
   label: l10n('AI Engineer', 'AI Engineer'),
-  tagline: l10n('기업의 AX 전환을 구현하는 AI 엔지니어 홍창의입니다.'),
+  tagline: l10n('AX 전환을 구현하는 AI 엔지니어 홍창의입니다.'),
   highlight: l10n('AI 엔지니어 | 홍창의'),
   interests: l10n('AX 전환 AI 엔지니어링\nRAG\nAI 에이전트\n멀티모달 AI\nMLOps\n로컬 LLM'),
   stack: ['Python', 'TypeScript', 'Flutter', 'Dart', 'Java', 'C++', 'Git', 'GitHub'].join('\n'),

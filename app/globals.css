@@ -140,6 +140,8 @@ html[data-scrolled] .site-header { background: var(--header-bg); backdrop-filter
 .hl { background: linear-gradient(var(--accent), var(--accent)) no-repeat left / 100% 100%; color: var(--on-accent); padding: 0 0.12em; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 
 /* 한 곳뿐일 때: 왼쪽 → 오른쪽으로 그어지고 남는다. 위로 스크롤해 돌아오면 오른쪽 → 왼쪽. */
+/* 강조 문구는 줄 중간에서 끊기지 않게 한 덩어리로 둔다 ("AI / 엔지니어"로 갈라지지 않도록) */
+.hl, .ul, .hero .keep { white-space: nowrap; }
 .hl.solo, .hl.mark { animation: hl-in 900ms var(--ease) calc(var(--i) * 45ms) both; }
 .hl.solo.seen, .hl.mark.seen { animation: none; }
 .hl.solo.replay, .hl.mark.replay { background-position: right; animation: hl-rev 700ms var(--ease) both; }
