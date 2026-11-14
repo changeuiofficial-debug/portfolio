@@ -18,7 +18,8 @@ const PER_CHAR = 3; // 글자 하나가 확정되는 데 걸리는 횟수
 
 /**
  * 텍스트 스크램블.
- * 화면에 들어오는 순간 무작위 글자로 섞였다가 왼쪽부터 한 글자씩 원래 값으로 확정된다. 1회만 재생한다.
+ * 화면에 들어오는 순간 무작위 글자로 섞였다가 왼쪽부터 한 글자씩 원래 값으로 확정된다.
+ * 화면 밖으로 완전히 나갔다가 다시 들어올 때마다(위로든 아래로든) 처음부터 다시 재생한다.
  * 처음에는 원래 값이 그대로 적혀 있으므로, 스크립트가 늦거나 "동작 줄이기" 설정이면 효과 없이 바로 보인다.
  * 화면 낭독기에는 섞이는 글자 대신 원래 값만 읽힌다.
  */
@@ -46,14 +47,21 @@ export default function Scramble({ text, index = 0 }: { text: string; index?: nu
       tick();
     };
 
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        io.disconnect();
-        timer = setTimeout(run, index * 140); // 칸마다 조금씩 늦게 시작
-      },
-      { threshold: 0.6 },
-    );
+    let armed = true; // 화면 밖으로 완전히 나갔다 오면 다시 재생할 수 있다
+    const handle = (entry: IntersectionObserverEntry) => {
+      if (!entry.isIntersecting) {
+        // 완전히 안 보이게 되면 재생을 멈추고 원래 값으로 돌려 둔다
+        clearTimeout(timer);
+        el.textContent = text;
+        armed = true;
+        return;
+      }
+      if (!armed || entry.intersectionRatio < 0.6) return;
+      armed = false;
+      timer = setTimeout(run, index * 140); // 칸마다 조금씩 늦게 시작
+    };
+    // 빠르게 스크롤하면 "나감"과 "들어옴"이 한 번에 올 수 있으므로 차례대로 처리한다
+    const io = new IntersectionObserver((entries) => entries.forEach(handle), { threshold: [0, 0.6] });
     io.observe(el);
     return () => {
       io.disconnect();
