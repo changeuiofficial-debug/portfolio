@@ -14,6 +14,19 @@ export const dynamic = 'force-dynamic';
 
 type Props = { params: Promise<{ lang: string }> };
 
+/**
+ * 링크 미리보기 이미지는 전체 주소가 필요하다.
+ * SITE_URL(직접 정한 주소) → Vercel이 자동으로 넣어 주는 배포 주소 → 로컬 순서로 쓴다.
+ * 배포 환경에 SITE_URL이 localhost로 잘못 들어가 있어도 배포 주소를 쓴다.
+ */
+function siteUrl() {
+  const set = process.env.SITE_URL;
+  const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (set && !(vercel && set.includes('localhost'))) return new URL(set);
+  if (vercel) return new URL(`https://${vercel}`);
+  return new URL('http://localhost:3000');
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLang(lang)) return {};
@@ -21,11 +34,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${profile.name} — ${pick(profile.label, lang)}`;
   const description = pick(profile.tagline, lang) || dict(lang).siteDesc;
   return {
-    metadataBase: new URL(process.env.SITE_URL || 'http://localhost:3000'),
+    metadataBase: siteUrl(),
     title: { default: title, template: `%s — ${profile.name}` },
     description,
     alternates: { canonical: lang === 'en' ? '/en' : '/', languages: { ko: '/', en: '/en' } },
-    openGraph: { title, description, type: 'website', locale: lang === 'en' ? 'en_US' : 'ko_KR' },
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      locale: lang === 'en' ? 'en_US' : 'ko_KR',
+      // public/og.png 는 scripts/make-og.mjs 로 만든다
+      images: [{ url: '/og.png', width: 1200, height: 630, alt: title }],
+    },
+    twitter: { card: 'summary_large_image', title, description, images: ['/og.png'] },
   };
 }
 

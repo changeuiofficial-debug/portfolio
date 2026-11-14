@@ -59,7 +59,7 @@ const isUrl = (v: string) => {
     return false;
   }
 };
-const isImagePath = (v: string) => v === '' || v.startsWith('/seed/') || store.UPLOAD_NAME.test(v.replace('/uploads/', ''));
+const isImagePath = (v: string) => v === '' || v.startsWith('/seed/') || v.startsWith('/profile/') || store.UPLOAD_NAME.test(v.replace('/uploads/', ''));
 
 /* ── 자기소개 ───────────────────────────── */
 
@@ -70,6 +70,7 @@ export async function saveProfileAction(input: Profile): Promise<Result> {
     label: loc(input.label),
     tagline: loc(input.tagline),
     highlight: loc(input.highlight),
+    bio: loc(input.bio ?? { ko: '', en: '' }),
     interests: loc(input.interests),
     stack: lines(str(input.stack)).slice(0, 24).join('\n'),
     career: loc(input.career),
@@ -83,6 +84,7 @@ export async function saveProfileAction(input: Profile): Promise<Result> {
   if (!p.name) errors.name = '이름을 입력해주세요.';
   if (!p.tagline.ko) errors.tagline = '한 줄 소개를 입력해주세요.';
   else if (tooLong(p.tagline, LIMITS.tagline)) errors.tagline = `한 줄 소개는 ${LIMITS.tagline}자까지 쓸 수 있습니다.`;
+  if (tooLong(p.bio, LIMITS.bio)) errors.bio = `자기소개는 ${LIMITS.bio}자까지 쓸 수 있습니다.`;
   for (const key of ['interests', 'career', 'education', 'certs'] as const) {
     if (tooLong(p[key], LIMITS.profileBody)) errors[key] = `${LIMITS.profileBody}자까지 쓸 수 있습니다.`;
   }

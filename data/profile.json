@@ -12,16 +12,25 @@
     "ko": "AI 엔지니어 | 홍창의",
     "en": ""
   },
+  "bio": {
+    "ko": "소프트웨어공학을 전공하고 AI 에이전트 제품의 QA로 실무를 시작했습니다. 그 경험 덕분에 무언가를 만들 때 \"되는가\"보다 \"어디서 틀릴 수 있는가\"를 먼저 살핍니다. 풋살팀 운영 웹앱을 기획부터 배포·유지보수까지 맡아 실제 사용자와 함께 다듬어 왔고, 지금은 AI 엔지니어 과정에서 RAG와 멀티모달을 공부하며 업무 현장에 AI를 녹여 내는 방법을 찾고 있습니다.",
+    "en": ""
+  },
   "interests": {
     "ko": "AX 전환 AI 엔지니어링\nRAG\nAI 에이전트\n멀티모달 AI\nMLOps\n로컬 LLM",
     "en": ""
   },
-  "skills": {
-    "ko": "웹앱 기획·개발·배포·유지보수 (포시즌FC 풋살팀 웹앱)\n브라우저 안에서 로컬 LLM으로 문서 Q&A를 하는 웹앱 구현 (LocalSage)\nAI 에이전트 제품 QA 수행 (●●●●● AI팀, 2025년 1~4월)\n영어 업무 소통 (TOEIC 920)",
+  "stack": "Python\nTypeScript\nFlutter\nDart\nJava\nC++\nGit\nGitHub",
+  "career": {
+    "ko": "2025.01 — 2025.04 | ●●●●● AI팀 · AI 에이전트 제품 QA",
     "en": ""
   },
   "education": {
     "ko": "2026.10 — 2027.05 수료 예정 | ●●●●● · AI 엔지니어 과정\n2026.11 수료 | 고양시민 기후테크 아카데미\n2026.03 졸업 | ●●●●● · 소프트웨어공학",
+    "en": ""
+  },
+  "certs": {
+    "ko": "TOEIC | 920\nOPIc | IH\nAICE | Associate",
     "en": ""
   },
   "email": "changeui.official@gmail.com",

@@ -6,7 +6,7 @@ import { saveProfileAction } from '@/app/actions';
 import { LIMITS, type Lang, type Profile } from '@/lib/types';
 import { Field, ImageDrop, useToast } from './form';
 
-type LKey = 'label' | 'tagline' | 'highlight' | 'interests' | 'career' | 'education' | 'certs';
+type LKey = 'label' | 'tagline' | 'highlight' | 'bio' | 'interests' | 'career' | 'education' | 'certs';
 
 /** 소유자에게만 렌더링된다. "소개 편집"을 누르면 소개 영역이 입력 양식으로 바뀐다. */
 export default function ProfileEditor({ profile, children }: { profile: Profile; children: ReactNode }) {
@@ -92,6 +92,15 @@ export default function ProfileEditor({ profile, children }: { profile: Profile;
       </Field>
       <Field label="형광펜으로 칠할 문구" hint="한 줄 소개 안에 있는 문구를 그대로 적습니다. 두 개를 | 로 나눠 적으면(예: AI 엔지니어 | 홍창의) 형광펜이 앞에서 뒤로 옮겨 갑니다.">
         <input className="in" value={p.highlight[tab]} onChange={(e) => setL('highlight', e.target.value)} />
+      </Field>
+      <Field
+        label="자기소개"
+        hint="소개 섹션 맨 위에 문단으로 보입니다. 3~4문장 정도가 알맞습니다. 비워 두면 보이지 않습니다."
+        error={errors.bio}
+        count={p.bio[tab].length}
+        max={LIMITS.bio}
+      >
+        <textarea className="in" value={p.bio[tab]} onChange={(e) => setL('bio', e.target.value)} />
       </Field>
       <Field label="라벨" hint="한 줄 소개 위의 작은 글자. 예: AI Engineer">
         <input className="in" value={p.label[tab]} onChange={(e) => setL('label', e.target.value)} />

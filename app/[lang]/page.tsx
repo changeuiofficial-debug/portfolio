@@ -97,9 +97,11 @@ function About({ profile, lang, t }: { profile: Profile; lang: Lang; t: Dict }) 
   const interests = lines(pick(profile.interests, lang));
   const stack = lines(profile.stack);
   const certs = lines(pick(profile.certs, lang));
+  const bio = pick(profile.bio, lang);
   return (
     <div className={`about${profile.photo ? ' has-photo' : ''}`}>
       <div className="about-body">
+        {bio && <p className="bio">{bio}</p>}
         {interests.length > 0 && (
           <div className="blk">
             <h3>{t.interests}</h3>

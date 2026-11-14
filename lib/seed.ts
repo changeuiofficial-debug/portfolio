@@ -6,6 +6,9 @@ export const seedProfile: Profile = {
   label: l10n('AI Engineer', 'AI Engineer'),
   tagline: l10n('AX 전환을 구현하는 AI 엔지니어 홍창의입니다.'),
   highlight: l10n('AI 엔지니어 | 홍창의'),
+  bio: l10n(
+    '소프트웨어공학을 전공하고 AI 에이전트 제품의 QA로 실무를 시작했습니다. 그 경험 덕분에 무언가를 만들 때 "되는가"보다 "어디서 틀릴 수 있는가"를 먼저 살핍니다. 풋살팀 운영 웹앱을 기획부터 배포·유지보수까지 맡아 실제 사용자와 함께 다듬어 왔고, 지금은 AI 엔지니어 과정에서 RAG와 멀티모달을 공부하며 업무 현장에 AI를 녹여 내는 방법을 찾고 있습니다.',
+  ),
   interests: l10n('AX 전환 AI 엔지니어링\nRAG\nAI 에이전트\n멀티모달 AI\nMLOps\n로컬 LLM'),
   stack: ['Python', 'TypeScript', 'Flutter', 'Dart', 'Java', 'C++', 'Git', 'GitHub'].join('\n'),
   career: l10n('2025.01 — 2025.04 | ●●●●● AI팀 · AI 에이전트 제품 QA'),

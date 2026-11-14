@@ -41,6 +41,7 @@ export interface Profile {
   label: L10n; // 한 줄 소개 위의 작은 라벨
   tagline: L10n; // 한 줄 소개
   highlight: L10n; // 한 줄 소개 중 형광펜을 칠할 문구
+  bio: L10n; // 자기소개 문단. 소개 섹션 맨 위에 보인다
   interests: L10n; // 한 줄에 하나
   stack: string; // 기술 스택. 한 줄에 하나, 강조하고 싶은 순서대로
   career: L10n; // 경력. 한 줄에 하나. "기간 | 내용"
@@ -53,6 +54,7 @@ export interface Profile {
 
 export const LIMITS = {
   tagline: 60,
+  bio: 400,
   profileBody: 1000,
   title: 40,
   summary: 80,
