@@ -43,9 +43,13 @@ export default async function ProjectDetail({ params }: Props) {
   const background = pick(p.background, lang);
   const role = pick(p.role, lang);
   const features = lines(pick(p.features, lang));
-  const problem = pick(p.problem, lang);
-  const result = pick(p.result, lang);
-  const figure = pick(p.resultFigure, lang);
+  // [임시 숨김] 아래 목록에 있는 작업물은 '해결한 문제'와 '결과'를 화면에 내보내지 않는다.
+  // 적어 둔 내용은 data/projects.json에 그대로 남아 있다.
+  // 다시 보이게 하려면 목록에서 해당 주소(slug)를 지우면 된다.
+  const hideProblemAndResult = ['fourseason-fc'].includes(p.slug);
+  const problem = hideProblemAndResult ? '' : pick(p.problem, lang);
+  const result = hideProblemAndResult ? '' : pick(p.result, lang);
+  const figure = hideProblemAndResult ? '' : pick(p.resultFigure, lang);
 
   return (
     <>
