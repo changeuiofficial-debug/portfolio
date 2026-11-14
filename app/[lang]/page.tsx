@@ -6,6 +6,7 @@ import ProjectCard from '@/components/ProjectCard';
 import Reveal from '@/components/Reveal';
 import Scramble from '@/components/Scramble';
 import Portrait from '@/components/Portrait';
+import ScrollLit from '@/components/ScrollLit';
 import { isOwner } from '@/lib/auth';
 import { dict, isLang, lines, pick, type Dict } from '@/lib/i18n';
 import { stackIcon } from '@/lib/stack';
@@ -101,7 +102,7 @@ function About({ profile, lang, t }: { profile: Profile; lang: Lang; t: Dict }) 
   return (
     <div className={`about${profile.photo ? ' has-photo' : ''}`}>
       <div className="about-body">
-        {bio && <p className="bio">{bio}</p>}
+        {bio && <ScrollLit className="bio" text={bio} />}
         {interests.length > 0 && (
           <div className="blk">
             <h3>{t.interests}</h3>
