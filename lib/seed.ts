@@ -6,7 +6,7 @@ export const seedProfile: Profile = {
   label: l10n('AI Engineer', 'AI Engineer'),
   tagline: l10n('기업의 AX 전환을 구현하는 AI 엔지니어 홍창의입니다.'),
   highlight: l10n('AI 엔지니어 | 홍창의'),
-  interests: l10n('AX 전환 AI 엔지니어링\n로컬 LLM\n프롬프트·컨텍스트 엔지니어링'),
+  interests: l10n('AX 전환 AI 엔지니어링\nRAG\nAI 에이전트\n멀티모달 AI\nMLOps\n로컬 LLM'),
   stack: ['Python', 'TypeScript', 'Flutter', 'Dart', 'Java', 'C++', 'Git', 'GitHub'].join('\n'),
   career: l10n('2025.01 — 2025.04 | ●●●●● AI팀 · AI 에이전트 제품 QA'),
   education: l10n(
